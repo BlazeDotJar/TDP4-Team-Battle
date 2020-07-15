@@ -1,15 +1,16 @@
-package me.xxfreakdevxx.de.game.object;
+package me.xxfreakdevxx.de.game.object.wapon;
 
 public enum WeaponType {
 	
 	FIST(0, "fist", "Faust", 1, 0, 0, 1, 1, 1, "", ""),
-	STEYR_AUG(1, "steyr_aug", "Steyr AUG", 35, 0.3, 1.1, 170, 200, 0.68d, "", "/audio/Tink_0.wav");
+	GLOCK_18(1, "glock_18", "Glock 18", 9, 350, 2500, 15, 30, 0.68d, "", "/audio/Tink_0.wav"),
+	STEYR_AUG(2, "steyr_aug", "Steyr AUG", 35, 90, 1700, 170, 200, 0.68d, "", "/audio/Tink_0.wav");
 	
-	int id = 0, ammo = 0;
-	double shootIntervall, reloadTime, damage_min, damage_max, accuracy;
+	int id = 0, ammo = 0, shootIntervall = 0, reloadTime = 0;
+	double damage_min, damage_max, accuracy;
 	String name, displayname, texture_path, audio_path;
 	
-	WeaponType(int id, String name, String displayname, int ammo, double shootIntervall, double reloadTime, double damage_min, double damage_max, double accuracy, String texture_path, String audio_path) {
+	WeaponType(int id, String name, String displayname, int ammo, int shootIntervall, int reloadTime, double damage_min, double damage_max, double accuracy, String texture_path, String audio_path) {
 		this.id=id;
 		this.name=name;
 		this.displayname=displayname;
@@ -39,7 +40,7 @@ public enum WeaponType {
 		return ammo;
 	}
 	
-	public double getShootIntervall() {
+	public int getShootIntervall() {
 		return shootIntervall;
 	}
 	

@@ -11,7 +11,7 @@ import me.xxfreakdevxx.de.game.object.ID;
 public abstract class LivingEntity extends GameObject {
 	
 	/* Variables */
-	protected final int damageIndicatorCooldown = 3;
+	protected final int damageIndicatorCooldown = 120;
 	protected boolean showIndicator = false;
 	protected int indicatorTime = 0;
 	protected double health = 20.0D;

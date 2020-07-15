@@ -17,19 +17,21 @@ public class Bullet extends GameObject {
 	
 	private Handler handler;
 	private double damage = 5;
+	public int size = 10;
 	private LivingEntity shooter;
 	private static int speed = 3;
 	private GameVector locationVector = null;
 	private GameVector mouseVector = null;
 	private GameVector moveVector = null;
 	Random r = new Random();
+	public Color color = Color.ORANGE;
 	
 	public Bullet(ID id, Location location, LivingEntity shooter, int width, int height, int mx, int my) {
 		super(id, location, width, height);
 		this.shooter = shooter;
 		this.handler = Game.getInstance().getHandler();
 		
-		Game.audiomanager.playByName("Tink_"+r.nextInt(3));
+//		Game.audiomanager.playByName("Tink_"+r.nextInt(3));
 		
 		locationVector = new GameVector(location.getX(), location.getY());
 		mouseVector = new GameVector(mx, my);
@@ -49,7 +51,7 @@ public class Bullet extends GameObject {
 			if(tempObject.getId() == ID.BLOCK) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					handler.removeObject(this);
-					Game.audiomanager.playByName("Dig_"+r.nextInt(3));
+//					Game.audiomanager.playByName("Dig_"+r.nextInt(3));
 				}
 			}else if(tempObject.getId() == ID.ENEMY && (tempObject != shooter)) {
 				if(getBounds().intersects(tempObject.getBounds())) {
@@ -57,16 +59,16 @@ public class Bullet extends GameObject {
 					handler.removeObject(this);
 					switch(r.nextInt(4)) {
 						case 0:
-							Game.audiomanager.playByName("zombie-3-new");
+//							Game.audiomanager.playByName("zombie-3-new");
 							break;
-//						case 1:
+						case 1:
 //							Game.audiomanager.playByName("zombie-5-new");
-//							break;
+							break;
 						case 2:
-							Game.audiomanager.playByName("zombie-6-new");
+//							Game.audiomanager.playByName("zombie-6-new");
 							break;
 						case 3:
-							Game.audiomanager.playByName("zombie-24-new");
+//							Game.audiomanager.playByName("zombie-24-new");
 							break;
 					}
 				}
@@ -76,11 +78,11 @@ public class Bullet extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.YELLOW);
+		g.setColor(color);
 		g.drawLine(((int)getLocation().getIntX()),
 				   ((int)getLocation().getIntY()),
-				   ((int)getLocation().clone().add(moveVector.getXVelocity()*30, 0).getIntX()),
-				   ((int)getLocation().clone().add(0, moveVector.getYVelocity()*30).getIntY() ));
+				   ((int)getLocation().clone().add(moveVector.getXVelocity()*size, 0).getIntX()),
+				   ((int)getLocation().clone().add(0, moveVector.getYVelocity()*size).getIntY() ));
 	}
 
 	@Override
@@ -124,7 +126,7 @@ public class Bullet extends GameObject {
 		
 		public void normalize() {
 			if(isNormalized == false) {				
-				double l /* Länge */ = Math.sqrt( ( x * x ) + ( y * y ) );
+				double l /* Lï¿½nge */ = Math.sqrt( ( x * x ) + ( y * y ) );
 				velX = (x / l) * speed;
 				velY = (y / l) * speed;
 				
@@ -160,6 +162,10 @@ public class Bullet extends GameObject {
 			    return Optional.of(point);
 			}
 		
+	}
+	public Bullet setColor(Color color) {
+		this.color = color;
+		return this;
 	}
 	
 }

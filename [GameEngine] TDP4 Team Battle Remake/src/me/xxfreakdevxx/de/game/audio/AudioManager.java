@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import me.xxfreakdevxx.de.game.object.WeaponType;
+import me.xxfreakdevxx.de.game.object.wapon.WeaponType;
 
 public class AudioManager {
 	

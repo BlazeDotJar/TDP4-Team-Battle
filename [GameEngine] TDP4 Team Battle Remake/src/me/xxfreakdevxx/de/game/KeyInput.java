@@ -4,6 +4,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import me.xxfreakdevxx.de.game.object.wapon.Glock18;
+import me.xxfreakdevxx.de.game.object.wapon.SteyrAug;
+
 public class KeyInput extends KeyAdapter {
 	
 	public ConcurrentLinkedQueue<Integer> pressed_keys = new ConcurrentLinkedQueue<Integer>();
@@ -32,6 +35,15 @@ public class KeyInput extends KeyAdapter {
 			case KeyEvent.VK_D:
 				Game.getInstance().player.getLocation().add(movement_speed, 0);
 				break;
+			case KeyEvent.VK_X:
+				Game.getInstance().player.weapon = new SteyrAug(Game.getInstance().player);
+				break;
+			case KeyEvent.VK_C:
+				Game.getInstance().player.weapon = new Glock18(Game.getInstance().player);
+				break;
+			case KeyEvent.VK_R:
+				Game.getInstance().player.weapon.reload();
+				break;
 				
 			}
 		}
@@ -57,7 +69,7 @@ public class KeyInput extends KeyAdapter {
 	}
 	public void release(int key) {
 		pressed_keys.remove(key);
-		//Spieler Movement zurücksetzen
+		//Spieler Movement zurï¿½cksetzen
 		switch(key) {
 		case KeyEvent.VK_SPACE:
 			break;

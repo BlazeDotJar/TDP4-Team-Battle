@@ -6,12 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-import me.xxfreakdevxx.de.game.audio.AudioManager;
 import me.xxfreakdevxx.de.game.object.ID;
 import me.xxfreakdevxx.de.game.object.block.StoneWallBlock;
 import me.xxfreakdevxx.de.game.object.entity.Monster;
 import me.xxfreakdevxx.de.game.object.entity.Player;
 import me.xxfreakdevxx.de.game.object.manager.PlatformManager;
+import me.xxfreakdevxx.de.game.object.wapon.WeaponHandler;
+import me.xxfreakdevxx.de.game.ui.UIManager;
 
 @SuppressWarnings("serial")
 public class Game extends Canvas implements Runnable {
@@ -32,7 +33,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int blocksize = 32;
 	public KeyInput keyinput = null;
 	public MouseInput mouseinput = null;
-	public static AudioManager audiomanager = null;
+//	public static AudioManager audiomanager = null;
 	
 	/* FPS */
 	public static int fps_current = 0;
@@ -66,12 +67,12 @@ public class Game extends Canvas implements Runnable {
 		this.addMouseListener(mouseinput);
 		this.addMouseMotionListener(new MouseMotion());
 		
-		readyToRender = true;
-		readyToTick = true;
 		
-		audiomanager = new AudioManager();
+//		audiomanager = new AudioManager();
 		level = textureAtlas.loadImage("/wizard_level.png");
 		loadLevel(level);
+		readyToRender = true;
+		readyToTick = true;
 	}
 	
 	private void start() {
@@ -136,7 +137,8 @@ public class Game extends Canvas implements Runnable {
 		handler.tick();
 		keyinput.tick();
 		mouseinput.shoot();
-		if(audiomanager != null) audiomanager.playNextAudio();
+		WeaponHandler.tick();
+//		if(audiomanager != null) audiomanager.playNextAudio();
 	}
 	public void render() {
 		if(readyToRender == false) return;
@@ -155,6 +157,9 @@ public class Game extends Canvas implements Runnable {
 		PlatformManager.render(g);
 		g2d.translate(camera.getX(), camera.getY());
 		
+		g.setColor(Color.BLACK);
+		g.drawString("FPS: "+fps_current, 10, 30);
+		UIManager.render(g, player);
 		g.dispose();
 		bs.show();
 	}
@@ -162,6 +167,7 @@ public class Game extends Canvas implements Runnable {
 	private void loadLevel(BufferedImage image) {
 		int w = image.getWidth();
 		int h = image.getHeight();
+		int zombs = 0;
 		for(int xx = 0; xx < w; xx++) {
 			for(int yy = 0; yy < h; yy++) {
 				int pixel = image.getRGB(xx, yy);
@@ -170,7 +176,10 @@ public class Game extends Canvas implements Runnable {
 				int blue = (pixel) & 0xff;
 				
 				if(red == 255) handler.addObject(new StoneWallBlock(ID.BLOCK, new Location(xx*blocksize, yy*blocksize), 32, 32));
-				if(green == 255) handler.addObject(new Monster(ID.ENEMY, new Location(xx*blocksize, yy*blocksize), 32, 32, 15.0D));
+				if(green == 255 && zombs != 120) {
+					handler.addObject(new Monster(ID.ENEMY, new Location(xx*blocksize, yy*blocksize), 32, 32, 15.0D));
+					zombs++;
+				}
 				if(blue == 255) {
 					player = new Player(ID.PLAYER, new Location(xx*blocksize, yy*blocksize), 100.0D);
 					handler.addObject(player);
