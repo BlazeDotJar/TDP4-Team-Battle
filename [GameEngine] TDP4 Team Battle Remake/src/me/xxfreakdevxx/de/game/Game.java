@@ -22,6 +22,8 @@ public class Game extends Canvas implements Runnable {
 	public static Window window = null;
 	
 	private boolean isRunning = false;
+	public boolean readyToRender = false;
+	public boolean readyToTick = false;
 	private Thread thread;
 	private Handler handler;
 	private BufferedImage level = null;
@@ -57,11 +59,15 @@ public class Game extends Canvas implements Runnable {
 		keyinput = new KeyInput();
 		mouseinput = new MouseInput();
 		handler = new Handler();
+		new PlatformManager();
 		camera = new Camera(0,0);
 		textureAtlas = new TextureAtlas();
 		this.addKeyListener(keyinput);
 		this.addMouseListener(mouseinput);
 		this.addMouseMotionListener(new MouseMotion());
+		
+		readyToRender = true;
+		readyToTick = true;
 		
 		audiomanager = new AudioManager();
 		level = textureAtlas.loadImage("/wizard_level.png");
@@ -121,6 +127,7 @@ public class Game extends Canvas implements Runnable {
 	public void tick() {
 		windowWidth = window.frame.getWidth();
 		windowHeight = window.frame.getHeight();
+		if(readyToTick == false) return;
 		for(int i = 0; i < handler.object.size(); i++) {
 			if(handler.object.get(i).getId() == ID.PLAYER) {
 				camera.tick(handler.object.get(i));
@@ -132,6 +139,7 @@ public class Game extends Canvas implements Runnable {
 		if(audiomanager != null) audiomanager.playNextAudio();
 	}
 	public void render() {
+		if(readyToRender == false) return;
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null) {
 			this.createBufferStrategy(3);

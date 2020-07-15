@@ -6,10 +6,7 @@ import java.awt.Rectangle;
 import me.xxfreakdevxx.de.game.Game;
 import me.xxfreakdevxx.de.game.Handler;
 import me.xxfreakdevxx.de.game.Location;
-import me.xxfreakdevxx.de.game.object.GameObject;
 import me.xxfreakdevxx.de.game.object.ID;
-import me.xxfreakdevxx.de.game.object.Material;
-import me.xxfreakdevxx.de.game.object.block.Block;
 
 public class Player extends LivingEntity {
 	

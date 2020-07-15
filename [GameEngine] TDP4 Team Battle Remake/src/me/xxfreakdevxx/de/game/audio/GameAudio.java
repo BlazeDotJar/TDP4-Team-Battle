@@ -11,7 +11,7 @@ import javax.sound.sampled.FloatControl;
 public class GameAudio {
 	/*
 	 * Accepted audio file formats:
-	 * - .wav
+	 * - .wav (16Bit max!)
 	 * - .mid
 	 * - .au
 	 */
@@ -22,7 +22,6 @@ public class GameAudio {
 	private float volume = 0.05f;
 	
 	public GameAudio(String name, String filePath) {
-		System.out.println("Laoding "+name);
 		this.name=name;
 		this.filePath=filePath;
 		if(!filePath.equalsIgnoreCase("none")) loadAudioFile();

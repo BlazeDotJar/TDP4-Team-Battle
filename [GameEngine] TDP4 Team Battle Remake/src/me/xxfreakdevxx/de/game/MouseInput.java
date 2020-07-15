@@ -31,7 +31,7 @@ public class MouseInput extends MouseAdapter {
 
 	
 	Camera camera = null;
-	int shootIntervall = 120;
+	int shootIntervall = 360;
 	int cooldown = 0;
 	
 	public void shoot() {

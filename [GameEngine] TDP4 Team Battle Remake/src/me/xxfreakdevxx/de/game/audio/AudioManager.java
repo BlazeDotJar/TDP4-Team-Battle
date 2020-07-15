@@ -4,18 +4,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import me.xxfreakdevxx.de.game.object.Weapon;
+import me.xxfreakdevxx.de.game.object.WeaponType;
 
 public class AudioManager {
 	
 	private HashMap<String, GameAudio> audioAtlas = new HashMap<String, GameAudio>();
 	private List<GameAudio> audioQueue = new LinkedList<GameAudio>();
 	private Random r = new Random();
-	private Timer timer;
-	private TimerTask task;
 	private List<String> tinkList = new LinkedList<String>();
 	private List<String> destroyList = new LinkedList<String>();
 	
@@ -51,8 +47,8 @@ public class AudioManager {
 	
 	public void loadAudioFiles() {
 		List<String> files = new LinkedList<String>();
-		for(int i = 0; i < Weapon.values().length; i++) {
-			String filePath = Weapon.values()[i].getAudioFilePath();
+		for(int i = 0; i < WeaponType.values().length; i++) {
+			String filePath = WeaponType.values()[i].getAudioFilePath();
 			String name = filePath.replace("/audio/", "");
 			if(!files.contains(name)) {
 				files.add(name);
