@@ -19,7 +19,7 @@ public class GameAudio {
 	private String filePath = "";
 //	private Sound audio;
 	private Clip audioClip;
-	private float volume = 0.05f;
+	private float volume = 0.1f;
 	
 	public GameAudio(String name, String filePath) {
 		this.name=name;
@@ -31,6 +31,7 @@ public class GameAudio {
 //		audio = new Sound(filePath);
 		
 		try{
+			System.out.println("Loading: "+filePath);
 			URL defaultSound = this.getClass().getResource(filePath);
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(defaultSound);
 			audioClip = AudioSystem.getClip();
@@ -51,14 +52,16 @@ public class GameAudio {
 	}
 	public boolean playOnce() {
 //		if(audio == null) return false;
+		if(audioClip.isRunning()) audioClip.stop();
 		audioClip.start();
 		return true;
 	}
-	public void setVolume(float volume) {
+	public GameAudio setVolume(float volume) {
 	    if (volume < 0f || volume > 1f)
 	        throw new IllegalArgumentException("Volume not valid: " + volume);
 	    FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);        
 	    gainControl.setValue(20f * (float) Math.log10(volume));
+	    return this;
 	}
 
 	public GameAudio getClone() {

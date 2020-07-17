@@ -1,10 +1,11 @@
-package me.xxfreakdevxx.de.game.object.wapon;
+package me.xxfreakdevxx.de.game.object.weapon;
 
 public enum WeaponType {
 	
 	FIST(0, "fist", "Faust", 1, 0, 0, 1, 1, 1, "", ""),
 	GLOCK_18(1, "glock_18", "Glock 18", 9, 350, 2500, 15, 30, 0.68d, "", "/audio/Tink_0.wav"),
-	STEYR_AUG(2, "steyr_aug", "Steyr AUG", 35, 90, 1700, 170, 200, 0.68d, "", "/audio/Tink_0.wav");
+	STEYER_AUG(2, "steyer_aug", "Steyer AUG", 35, 160, 1700, 170, 200, 0.68d, "", "/audio/steyer_aug_shot.wav"),
+	SHOTGUN(3, "shot_gun", "Steyr AUG", 35, 160, 1700, 170, 200, 0.68d, "", "/audio/shotgun_shot.wav");
 	
 	int id = 0, ammo = 0, shootIntervall = 0, reloadTime = 0;
 	double damage_min, damage_max, accuracy;

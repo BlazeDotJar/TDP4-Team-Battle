@@ -6,12 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import me.xxfreakdevxx.de.game.audio.AudioManager;
 import me.xxfreakdevxx.de.game.object.ID;
 import me.xxfreakdevxx.de.game.object.block.StoneWallBlock;
 import me.xxfreakdevxx.de.game.object.entity.Monster;
 import me.xxfreakdevxx.de.game.object.entity.Player;
 import me.xxfreakdevxx.de.game.object.manager.PlatformManager;
-import me.xxfreakdevxx.de.game.object.wapon.WeaponHandler;
+import me.xxfreakdevxx.de.game.object.weapon.WeaponHandler;
 import me.xxfreakdevxx.de.game.ui.UIManager;
 
 @SuppressWarnings("serial")
@@ -33,7 +34,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int blocksize = 32;
 	public KeyInput keyinput = null;
 	public MouseInput mouseinput = null;
-//	public static AudioManager audiomanager = null;
+	public static AudioManager audiomanager = null;
 	
 	/* FPS */
 	public static int fps_current = 0;
@@ -68,9 +69,10 @@ public class Game extends Canvas implements Runnable {
 		this.addMouseMotionListener(new MouseMotion());
 		
 		
-//		audiomanager = new AudioManager();
+		audiomanager = new AudioManager();
 		level = textureAtlas.loadImage("/wizard_level.png");
 		loadLevel(level);
+		System.out.println("Game ready");
 		readyToRender = true;
 		readyToTick = true;
 	}
@@ -138,7 +140,7 @@ public class Game extends Canvas implements Runnable {
 		keyinput.tick();
 		mouseinput.shoot();
 		WeaponHandler.tick();
-//		if(audiomanager != null) audiomanager.playNextAudio();
+		if(audiomanager != null) audiomanager.playNextAudio();
 	}
 	public void render() {
 		if(readyToRender == false) return;
@@ -181,7 +183,7 @@ public class Game extends Canvas implements Runnable {
 					zombs++;
 				}
 				if(blue == 255) {
-					player = new Player(ID.PLAYER, new Location(xx*blocksize, yy*blocksize), 100.0D);
+					player = new Player(new Location(xx*blocksize, yy*blocksize), 100.0D);
 					handler.addObject(player);
 				}
 			}

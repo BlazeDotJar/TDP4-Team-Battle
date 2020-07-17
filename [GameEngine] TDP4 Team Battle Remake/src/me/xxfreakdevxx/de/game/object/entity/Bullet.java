@@ -26,19 +26,16 @@ public class Bullet extends GameObject {
 	Random r = new Random();
 	public Color color = Color.ORANGE;
 	
-	public Bullet(ID id, Location location, LivingEntity shooter, int width, int height, int mx, int my) {
-		super(id, location, width, height);
+	public Bullet(Location location, LivingEntity shooter, int width, int height, int mx, int my) {
+		super(ID.BULLET, location, width, height);
 		this.shooter = shooter;
 		this.handler = Game.getInstance().getHandler();
-		
-//		Game.audiomanager.playByName("Tink_"+r.nextInt(3));
-		
+
 		locationVector = new GameVector(location.getX(), location.getY());
 		mouseVector = new GameVector(mx, my);
 		mouseVector.normalize();
 		moveVector = new GameVector(mouseVector.getX()-locationVector.getX(),
 									mouseVector.getY()-locationVector.getY());
-
 	}
 
 	@Override
@@ -51,26 +48,13 @@ public class Bullet extends GameObject {
 			if(tempObject.getId() == ID.BLOCK) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					handler.removeObject(this);
-//					Game.audiomanager.playByName("Dig_"+r.nextInt(3));
+					Game.audiomanager.playRandomWallHit();
 				}
 			}else if(tempObject.getId() == ID.ENEMY && (tempObject != shooter)) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					((LivingEntity)tempObject).damage(damage, shooter);
 					handler.removeObject(this);
-					switch(r.nextInt(4)) {
-						case 0:
-//							Game.audiomanager.playByName("zombie-3-new");
-							break;
-						case 1:
-//							Game.audiomanager.playByName("zombie-5-new");
-							break;
-						case 2:
-//							Game.audiomanager.playByName("zombie-6-new");
-							break;
-						case 3:
-//							Game.audiomanager.playByName("zombie-24-new");
-							break;
-					}
+					Game.audiomanager.playRandomBodyDamage();
 				}
 			}
 		}

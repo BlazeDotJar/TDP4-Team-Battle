@@ -1,27 +1,22 @@
 package me.xxfreakdevxx.de.game.object.entity;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
 import me.xxfreakdevxx.de.game.Game;
 import me.xxfreakdevxx.de.game.Handler;
 import me.xxfreakdevxx.de.game.Location;
-import me.xxfreakdevxx.de.game.MouseMotion;
-import me.xxfreakdevxx.de.game.TextureAtlas;
 import me.xxfreakdevxx.de.game.object.ID;
-import me.xxfreakdevxx.de.game.object.Material;
 import me.xxfreakdevxx.de.game.object.weapon.SteyrAug;
 import me.xxfreakdevxx.de.game.object.weapon.Weapon;
 
-public class Player extends LivingEntity {
+public class Player2 extends LivingEntity {
 	
 	public AffineTransform at = null;
-	public double angle;
 	
-	public Player(Location location, double health) {
-		super(ID.PLAYER, location, 20, 20, health);
+	public Player2(Location location, double health) {
+		super(ID.PLAYER, location, 32, 54, health);
 		this.handler = Game.getInstance().getHandler();
 		this.weapon = new SteyrAug(this);
 	}
@@ -37,29 +32,6 @@ public class Player extends LivingEntity {
 		getLocation().add(velX, velY);
 		
 		collision();
-		
-		/* Graphic */
-		if(MouseMotion.mouseLocation != null) {
-			int x = (int) Game.getInstance().getCamera().getX();
-			int y = (int) Game.getInstance().getCamera().getY();
-			
-			
-			double width = MouseMotion.mouseLocation.getX() - (getLocation().getX()  - x + 20);
-			double height = MouseMotion.mouseLocation.getY() - (getLocation().getY() - y + 20);
-			
-			angle = Math.atan(height / width);
-			
-			if(width < 0)
-				angle = -Math.PI + angle;
-			
-			
-			at = AffineTransform.getTranslateInstance(getLocation().getX() - x, getLocation().getY() - y);
-			
-			
-			at.rotate(angle, 20, 20);
-		}
-		
-
 		
 		/* Movement */
 		if(handler.isUp()) velY = -movementSpeed;
@@ -101,9 +73,7 @@ public class Player extends LivingEntity {
 		renderHealthbar(g);
 		g.setColor(Color.ORANGE);
 		g.fillRect(getLocation().getIntX(), getLocation().getIntY(), width, height);
-		Graphics2D g2d = (Graphics2D)g;
 		
-		if(at != null) g2d.drawImage(Game.getInstance().getTextureAtlas().getTexture(Material.STONE_WALL.getName()), at, null);
 //		/* Displayname */
 //		g.setColor(new Color(0f,0f,0f,0.4f));
 //		g.fillRect((getLocation().getIntX()+(width/2) - 22), getLocation().getIntY()-19, 58, 16);

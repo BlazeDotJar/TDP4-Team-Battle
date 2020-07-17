@@ -4,8 +4,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import me.xxfreakdevxx.de.game.object.wapon.Glock18;
-import me.xxfreakdevxx.de.game.object.wapon.SteyrAug;
+import me.xxfreakdevxx.de.game.object.weapon.Glock18;
+import me.xxfreakdevxx.de.game.object.weapon.SteyrAug;
 
 public class KeyInput extends KeyAdapter {
 	

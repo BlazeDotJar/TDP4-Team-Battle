@@ -1,14 +1,13 @@
-package me.xxfreakdevxx.de.game.object.wapon;
+package me.xxfreakdevxx.de.game.object.weapon;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.util.Random;
 
 import me.xxfreakdevxx.de.game.Camera;
 import me.xxfreakdevxx.de.game.Game;
 import me.xxfreakdevxx.de.game.Location;
 import me.xxfreakdevxx.de.game.MouseMotion;
-import me.xxfreakdevxx.de.game.object.GameObject;
-import me.xxfreakdevxx.de.game.object.ID;
 import me.xxfreakdevxx.de.game.object.entity.Bullet;
 import me.xxfreakdevxx.de.game.object.entity.LivingEntity;
 
@@ -16,6 +15,7 @@ public abstract class Weapon {
 	
 	protected WeaponType type = WeaponType.FIST;
 	
+	public Random r = new Random();
 	protected double intervall = 0d;
 	protected double shootIntervall = 0.66d; //Seconds
 	protected double damage_min = 1.1d;
@@ -60,25 +60,22 @@ public abstract class Weapon {
 			int mx = (int) (MouseMotion.mouseLocation.getIntX() + camera.getX());
 			int my = (int) (MouseMotion.mouseLocation.getIntY() + camera.getY());
 			
-			for(int i = 0; i < Game.getInstance().getHandler().object.size(); i++) {
-				GameObject tempObject = Game.getInstance().getHandler().object.get(i);
-				
-				if(tempObject.getId() == ID.PLAYER) {
-					int w = (int)tempObject.getBounds().getWidth();
-					int h = (int)tempObject.getBounds().getHeight();
-					
-					int pX = tempObject.getLocation().getIntX()+(w/2);
-					int pY = tempObject.getLocation().getIntY()+(h/2);
-					int sizeX = 8;
-					int sizeY = 8;
-					Game.getInstance().getHandler().addObject(new Bullet(ID.BULLET, new Location(pX, pY), ((LivingEntity)tempObject), sizeX, sizeY, mx, my).setColor(bullet_color));
-				}
-			}
+			int w = (int)Game.getInstance().player.getBounds().getWidth();
+			int h = (int)Game.getInstance().player.getBounds().getHeight();
+			
+			int pX = Game.getInstance().player.getLocation().getIntX()+(w/2);
+			int pY = Game.getInstance().player.getLocation().getIntY()+(h/2);
+			int sizeX = 8;
+			int sizeY = 8;
+			Game.getInstance().getHandler().addObject(new Bullet(new Location(pX, pY), Game.getInstance().player, sizeX, sizeY, mx, my).setColor(bullet_color));
+			playRandomShot();
 			current_ammo--;
 		}
 	}
 	public int reload = 0;
 	public void reload() {
+		if(current_ammo == ammo) return;
+		if(isReloading == false) Game.audiomanager.playByName("gun_cock");
 		current_ammo=0;
 		if(current_ammo <= 0) {		
 			isReloading = true;
@@ -87,14 +84,18 @@ public abstract class Weapon {
 				current_ammo = ammo;
 				isReloading = false;
 				reload = 0;
+				Game.audiomanager.playByName("gun_cocked");
 			}else reload+=1;
 		}
 	}
 	public void tick() {
 		if(MouseMotion.mouseLocation != null)shoot(new Point(MouseMotion.mouseLocation.getIntX(), MouseMotion.mouseLocation.getIntY()));
+		else System.out.println("Mouselocation == null");
 	}
 	public void trigger() {
 		isTriggered = true;
+		if(MouseMotion.mouseLocation != null)shoot(new Point(MouseMotion.mouseLocation.getIntX(), MouseMotion.mouseLocation.getIntY()));
+		else System.out.println("Mouselocation == null");
 	}
 	public void stopTrigger() {
 		isTriggered = false;
@@ -102,5 +103,6 @@ public abstract class Weapon {
 	public WeaponType getType() {
 		return type;
 	}
+	public abstract void playRandomShot();
 	
 }

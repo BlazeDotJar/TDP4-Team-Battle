@@ -1,4 +1,4 @@
-package me.xxfreakdevxx.de.game.object.wapon;
+package me.xxfreakdevxx.de.game.object.weapon;
 
 import java.util.ArrayList;
 
