@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import me.xxfreakdevxx.de.game.object.weapon.Glock18;
-import me.xxfreakdevxx.de.game.object.weapon.SteyrAug;
+import me.xxfreakdevxx.de.game.object.weapon.SteyerAug;
 
 public class KeyInput extends KeyAdapter {
 	
@@ -36,7 +36,7 @@ public class KeyInput extends KeyAdapter {
 				Game.getInstance().player.getLocation().add(movement_speed, 0);
 				break;
 			case KeyEvent.VK_X:
-				Game.getInstance().player.weapon = new SteyrAug(Game.getInstance().player);
+				Game.getInstance().player.weapon = new SteyerAug(Game.getInstance().player);
 				break;
 			case KeyEvent.VK_C:
 				Game.getInstance().player.weapon = new Glock18(Game.getInstance().player);

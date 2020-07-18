@@ -2,6 +2,7 @@ package me.xxfreakdevxx.de.game.object.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.Random;
 import me.xxfreakdevxx.de.game.Game;
 import me.xxfreakdevxx.de.game.Handler;
 import me.xxfreakdevxx.de.game.Location;
+import me.xxfreakdevxx.de.game.TextureAtlas;
 import me.xxfreakdevxx.de.game.object.GameObject;
 import me.xxfreakdevxx.de.game.object.ID;
 
@@ -26,6 +28,9 @@ public class Bullet extends GameObject {
 	Random r = new Random();
 	public Color color = Color.ORANGE;
 	
+	public int muzzle_time_max = 30;
+	public int muzzle_time = muzzle_time_max;
+	
 	public Bullet(Location location, LivingEntity shooter, int width, int height, int mx, int my) {
 		super(ID.BULLET, location, width, height);
 		this.shooter = shooter;
@@ -36,10 +41,12 @@ public class Bullet extends GameObject {
 		mouseVector.normalize();
 		moveVector = new GameVector(mouseVector.getX()-locationVector.getX(),
 									mouseVector.getY()-locationVector.getY());
+		getLocation().add(10*moveVector.getXVelocity(), 10*moveVector.getYVelocity());
 	}
 
 	@Override
 	public void tick() {
+		if(muzzle_time > 0) muzzle_time--;
 		getLocation().add(moveVector.getXVelocity(), moveVector.getYVelocity());
 		
 		for(int i = 0; i < handler.object.size(); i++) {
@@ -67,6 +74,10 @@ public class Bullet extends GameObject {
 				   ((int)getLocation().getIntY()),
 				   ((int)getLocation().clone().add(moveVector.getXVelocity()*size, 0).getIntX()),
 				   ((int)getLocation().clone().add(0, moveVector.getYVelocity()*size).getIntY() ));
+		
+		Graphics2D g2d = (Graphics2D)g.create();
+        g2d.rotate( Math.toRadians( Game.player.rotate ), getLocation().getIntX(), getLocation().getIntY());
+        if(muzzle_time>0) g2d.drawImage(TextureAtlas.getTexture("muzzle_"+(r.nextInt(3)+1)),getLocation().getIntX(), getLocation().getIntY(), 80, 20, null);
 	}
 
 	@Override

@@ -2,10 +2,10 @@ package me.xxfreakdevxx.de.game.object.weapon;
 
 import me.xxfreakdevxx.de.game.object.entity.LivingEntity;
 
-public class Shutgun extends Weapon {
+public class Pumpgun extends Weapon {
 
-	public Shutgun(LivingEntity shooter) {
-		super(WeaponType.SHOTGUN, shooter);
+	public Pumpgun(LivingEntity shooter) {
+		super(WeaponType.PUMPGUN, shooter);
 		// TODO Auto-generated constructor stub
 	}
 

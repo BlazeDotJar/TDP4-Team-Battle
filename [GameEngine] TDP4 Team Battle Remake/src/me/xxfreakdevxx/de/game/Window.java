@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 
 public class Window {
 	
-	JFrame frame = null;
+	public JFrame frame = null;
 	public Window(int width, int height, String title, Game game) {
 		frame = new JFrame(title);
 		

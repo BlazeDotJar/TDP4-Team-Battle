@@ -2,6 +2,7 @@ package me.xxfreakdevxx.de.game.object;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import me.xxfreakdevxx.de.game.Location;
 
@@ -14,6 +15,7 @@ public abstract class GameObject {
 	public double velY = 0;
 	protected ID id;
 	protected BufferedImage texture;
+	public Random r = new Random();
 	
 	public GameObject(ID id, Location location, int width, int height) {
 		this.id=id;

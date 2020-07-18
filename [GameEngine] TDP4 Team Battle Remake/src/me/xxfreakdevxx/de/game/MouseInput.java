@@ -13,7 +13,7 @@ public class MouseInput extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) {			
 			isPressed = true;
-			Game.getInstance().player.weapon.trigger();
+			Game.player.weapon.trigger();
 		}
 	}
 	
@@ -21,7 +21,7 @@ public class MouseInput extends MouseAdapter {
 	public void mouseReleased(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) {			
 			isPressed = false;
-			Game.getInstance().player.weapon.stopTrigger();
+			Game.player.weapon.stopTrigger();
 		}
 	}
 

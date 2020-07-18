@@ -2,12 +2,14 @@ package me.xxfreakdevxx.de.game.object.weapon;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import me.xxfreakdevxx.de.game.Camera;
 import me.xxfreakdevxx.de.game.Game;
 import me.xxfreakdevxx.de.game.Location;
 import me.xxfreakdevxx.de.game.MouseMotion;
+import me.xxfreakdevxx.de.game.TextureAtlas;
 import me.xxfreakdevxx.de.game.object.entity.Bullet;
 import me.xxfreakdevxx.de.game.object.entity.LivingEntity;
 
@@ -28,6 +30,7 @@ public abstract class Weapon {
 	protected boolean isTriggered = false;
 	protected boolean isReloading = false;
 	public Color bullet_color = Color.ORANGE;
+	protected BufferedImage texture = null;
 	
 	public Weapon(WeaponType type, LivingEntity shooter) {
 		this.type = type;
@@ -38,6 +41,7 @@ public abstract class Weapon {
 		this.reloadTime = type.reloadTime;
 		this.ammo = type.ammo;
 		this.current_ammo = ammo;
+		this.texture = TextureAtlas.getTexture(type.getName());
 		WeaponHandler.weapons.add(this);
 	}
 	
@@ -56,18 +60,18 @@ public abstract class Weapon {
 			return;
 		}else intervall=0;
 		if(current_ammo > 0 && isReloading == false && isTriggered) {
-			camera = Game.getInstance().getCamera();
+			camera = Game.getCamera();
 			int mx = (int) (MouseMotion.mouseLocation.getIntX() + camera.getX());
 			int my = (int) (MouseMotion.mouseLocation.getIntY() + camera.getY());
 			
-			int w = (int)Game.getInstance().player.getBounds().getWidth();
-			int h = (int)Game.getInstance().player.getBounds().getHeight();
+			int w = (int)Game.player.getBounds().getWidth();
+			int h = (int)Game.player.getBounds().getHeight();
 			
-			int pX = Game.getInstance().player.getLocation().getIntX()+(w/2);
-			int pY = Game.getInstance().player.getLocation().getIntY()+(h/2);
+			int pX = Game.player.getLocation().getIntX()+(w/2);
+			int pY = Game.player.getLocation().getIntY()+(h/2);
 			int sizeX = 8;
 			int sizeY = 8;
-			Game.getInstance().getHandler().addObject(new Bullet(new Location(pX, pY), Game.getInstance().player, sizeX, sizeY, mx, my).setColor(bullet_color));
+			Game.getInstance().getHandler().addObject(new Bullet(new Location(pX, pY), Game.player, sizeX, sizeY, mx, my).setColor(bullet_color));
 			playRandomShot();
 			current_ammo--;
 		}
@@ -77,7 +81,7 @@ public abstract class Weapon {
 		if(current_ammo == ammo) return;
 		if(isReloading == false) Game.audiomanager.playByName("gun_cock");
 		current_ammo=0;
-		if(current_ammo <= 0) {		
+		if(current_ammo <= 0) {
 			isReloading = true;
 			if(reload == reloadTime) {
 				intervall=0;
@@ -102,6 +106,9 @@ public abstract class Weapon {
 	}
 	public WeaponType getType() {
 		return type;
+	}
+	public BufferedImage getTexture() {
+		return texture;
 	}
 	public abstract void playRandomShot();
 	

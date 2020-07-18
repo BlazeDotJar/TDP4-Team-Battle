@@ -10,11 +10,11 @@ import me.xxfreakdevxx.de.game.object.Material;
 
 public class TextureAtlas {
 	
-	private BufferedImage image;
-	private HashMap<String, BufferedImage> textures;
+	private static BufferedImage image;
+	private static HashMap<String, BufferedImage> textures;
 	
 	public TextureAtlas() {
-		this.textures=new HashMap<String, BufferedImage>();
+		TextureAtlas.textures=new HashMap<String, BufferedImage>();
 		reloadTextures();
 	}
 	
@@ -27,19 +27,23 @@ public class TextureAtlas {
 		return image;
 	}
 	public void reloadTextures() {
-		/* L�dt alle Texturen neu und f�gt sie zum Atlas(textures(hashmap)) hinzu */
+		/* Lädt alle Texturen neu und f�gt sie zum Atlas(textures(hashmap)) hinzu */
 		textures.clear();
 		for(int i = 0; i < Material.values().length; i++) {
 			Material material = Material.values()[i];
 			textures.put(material.getName(), loadImage("/"+material.getName()+".png"));
 		}
 		textures.put("monster", loadImage("/monster.png"));
+		textures.put("steyer_aug", loadImage("/weapon/steyer_aug.png"));
+		textures.put("muzzle_1", loadImage("/weapon/muzzle_1.png"));
+		textures.put("muzzle_2", loadImage("/weapon/muzzle_2.png"));
+		textures.put("muzzle_3", loadImage("/weapon/muzzle_3.png"));
 	}
 	
-	public HashMap<String, BufferedImage> getTextures() {
+	public static HashMap<String, BufferedImage> getTextures() {
 		return textures;
 	}
-	public BufferedImage getTexture(String name) {
+	public static BufferedImage getTexture(String name) {
 		return getTextures().get(name);
 	}
 	

@@ -8,7 +8,7 @@ import me.xxfreakdevxx.de.game.Game;
 import me.xxfreakdevxx.de.game.Handler;
 import me.xxfreakdevxx.de.game.Location;
 import me.xxfreakdevxx.de.game.object.ID;
-import me.xxfreakdevxx.de.game.object.weapon.SteyrAug;
+import me.xxfreakdevxx.de.game.object.weapon.SteyerAug;
 import me.xxfreakdevxx.de.game.object.weapon.Weapon;
 
 public class Player2 extends LivingEntity {
@@ -18,7 +18,7 @@ public class Player2 extends LivingEntity {
 	public Player2(Location location, double health) {
 		super(ID.PLAYER, location, 32, 54, health);
 		this.handler = Game.getInstance().getHandler();
-		this.weapon = new SteyrAug(this);
+		this.weapon = new SteyerAug(this);
 	}
 	
 	public Weapon weapon = null;

@@ -29,7 +29,7 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private Handler handler;
 	private BufferedImage level = null;
-	private Camera camera;
+	private static Camera camera;
 	private TextureAtlas textureAtlas;
 	public static final int blocksize = 32;
 	public KeyInput keyinput = null;
@@ -41,7 +41,7 @@ public class Game extends Canvas implements Runnable {
 	public static int fps_maximal = -1;
 	public static double tickSpeed = 1200;
 	
-	public Player player = null;
+	public static Player player = null;
 	
 	static Game instance;
 	public static Game getInstance() {
@@ -198,7 +198,7 @@ public class Game extends Canvas implements Runnable {
 		return handler;
 	}
 	
-	public Camera getCamera() {
+	public static Camera getCamera() {
 		return camera;
 	}
 	
