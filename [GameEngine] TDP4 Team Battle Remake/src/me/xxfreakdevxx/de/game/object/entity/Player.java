@@ -107,7 +107,20 @@ public class Player extends LivingEntity {
 		g.fillRect(getLocation().getIntX(), getLocation().getIntY(), width, height);
 		Graphics2D g2d = (Graphics2D)g.create();
         g2d.rotate( Math.toRadians( Game.player.rotate ), getLocation().getIntX(), getLocation().getIntY());
-        g2d.drawImage(weapon.getTexture(), getLocation().getIntX(), getLocation().getIntY(), 60, 20, null);
+        switch(MouseMotion.quadrant) {
+        case 1:
+        	g2d.drawImage(createFlipped(weapon.getTexture()), getLocation().getIntX(), getLocation().getIntY(), 60, 20, null);
+        	break;
+        case 2:
+        	g2d.drawImage(              weapon.getTexture(),  getLocation().getIntX(), getLocation().getIntY(), 60, 20, null);
+        	break;
+        case 3:
+        	g2d.drawImage(createFlipped(weapon.getTexture()), getLocation().getIntX(), getLocation().getIntY(), 60, 20, null);
+        	break;
+        case 4:
+        	g2d.drawImage(              weapon.getTexture(),  getLocation().getIntX(), getLocation().getIntY(), 60, 20, null);
+        	break;
+        }
         
 //		/* Displayname */
 //		g.setColor(new Color(0f,0f,0f,0.4f));

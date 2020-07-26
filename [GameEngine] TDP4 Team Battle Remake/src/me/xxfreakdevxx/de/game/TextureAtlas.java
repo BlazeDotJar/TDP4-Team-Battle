@@ -38,6 +38,7 @@ public class TextureAtlas {
 		textures.put("muzzle_1", loadImage("/weapon/muzzle_1.png"));
 		textures.put("muzzle_2", loadImage("/weapon/muzzle_2.png"));
 		textures.put("muzzle_3", loadImage("/weapon/muzzle_3.png"));
+		textures.put("muzzle_4", loadImage("/weapon/muzzle_4.png"));
 	}
 	
 	public static HashMap<String, BufferedImage> getTextures() {

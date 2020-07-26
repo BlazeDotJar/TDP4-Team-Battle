@@ -11,6 +11,7 @@ import java.util.Random;
 import me.xxfreakdevxx.de.game.Game;
 import me.xxfreakdevxx.de.game.Handler;
 import me.xxfreakdevxx.de.game.Location;
+import me.xxfreakdevxx.de.game.MouseMotion;
 import me.xxfreakdevxx.de.game.TextureAtlas;
 import me.xxfreakdevxx.de.game.object.GameObject;
 import me.xxfreakdevxx.de.game.object.ID;
@@ -30,6 +31,7 @@ public class Bullet extends GameObject {
 	
 	public int muzzle_time_max = 30;
 	public int muzzle_time = muzzle_time_max;
+	private int multiplier = 15;
 	
 	public Bullet(Location location, LivingEntity shooter, int width, int height, int mx, int my) {
 		super(ID.BULLET, location, width, height);
@@ -75,9 +77,33 @@ public class Bullet extends GameObject {
 				   ((int)getLocation().clone().add(moveVector.getXVelocity()*size, 0).getIntX()),
 				   ((int)getLocation().clone().add(0, moveVector.getYVelocity()*size).getIntY() ));
 		
+		renderMuzzleFLash(g);
+	}
+	public void renderMuzzleFLash(Graphics g) {
+		
 		Graphics2D g2d = (Graphics2D)g.create();
-        g2d.rotate( Math.toRadians( Game.player.rotate ), getLocation().getIntX(), getLocation().getIntY());
-        if(muzzle_time>0) g2d.drawImage(TextureAtlas.getTexture("muzzle_"+(r.nextInt(3)+1)),getLocation().getIntX(), getLocation().getIntY(), 80, 20, null);
+        g2d.rotate( Math.toRadians( Game.player.rotate ), Game.player.getLocation().getIntX(), Game.player.getLocation().getIntY());
+        if(muzzle_time>0) {
+        	switch(MouseMotion.quadrant) {
+        	case 1:
+        		g2d.drawImage(TextureAtlas.getTexture("muzzle_4"), (int)(Game.player.getLocation().getIntX()-(moveVector.getXVelocity()*multiplier)),
+        				                                           (int)(Game.player.getLocation().getIntY()+(moveVector.getYVelocity())), 80, 20, null);
+        		break;
+        	case 2:
+        		g2d.drawImage(TextureAtlas.getTexture("muzzle_4"), (int)(Game.player.getLocation().getIntX()+(moveVector.getXVelocity()*multiplier)),
+        				                                           (int)(Game.player.getLocation().getIntY()-(moveVector.getYVelocity())), 80, 20, null);
+        		break;
+        	case 3:
+        		g2d.drawImage(TextureAtlas.getTexture("muzzle_4"), (int)(Game.player.getLocation().getIntX()-(moveVector.getXVelocity()*multiplier)),
+        				                                           (int)(Game.player.getLocation().getIntY()+(moveVector.getYVelocity())), 80, 20, null);
+        		break;
+        	case 4:
+        		g2d.drawImage(TextureAtlas.getTexture("muzzle_4"), (int)(Game.player.getLocation().getIntX()+(moveVector.getXVelocity()*multiplier)),
+        				                                           (int)(Game.player.getLocation().getIntY()+(moveVector.getYVelocity()*multiplier)), 80, 20, null);
+        		break;
+        	}
+        }
+		
 	}
 
 	@Override

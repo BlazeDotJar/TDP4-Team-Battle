@@ -21,13 +21,13 @@ public class Handler {
 	}
 	
 	public void render(Graphics g) {
+		Game.player.render(g);
 		for(int i = 0; i < object.size(); i++) {
 			GameObject tempObject = object.get(i);
 			if(tempObject instanceof Player == false) 
 				tempObject.render(g);
 		}
 		
-		Game.getInstance().player.render(g);
 	}
 	
 	public void addObject(GameObject tempObject) {
